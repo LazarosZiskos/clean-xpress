@@ -7,91 +7,106 @@ import {
   SparklesIcon,
   TruckIcon,
 } from "@heroicons/react/24/outline";
-import { useTranslations } from "next-intl";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 const Services = () => {
-  const t = useTranslations("services");
-
   const services = [
     {
       icon: HomeIcon,
-      title: t("residential.title"),
-      description: t("residential.description"),
-      features: t("residential.features").split(","),
+      title: "Καθαρισμός Κατοικιών",
+      description:
+        "Ολοκληρωμένες υπηρεσίες καθαρισμού σπιτιού, συμπεριλαμβανομένης της τακτικής συντήρησης, του βαθύ καθαρισμού και του καθαρισμού εισόδου/εξόδου.",
+      features: [
+        "Βαθύς καθαρισμός",
+        "Τακτική συντήρηση",
+        "Καθαρισμός παραθύρων",
+        "Καθαρισμός χαλιών",
+      ],
     },
     {
       icon: BuildingOfficeIcon,
-      title: t("commercial.title"),
-      description: t("commercial.description"),
-      features: t("commercial.features").split(","),
+      title: "Καθαρισμός Επαγγελματικών Χώρων",
+      description:
+        "Επαγγελματικές λύσεις καθαρισμού για γραφεία, καταστήματα και εμπορικούς χώρους για τη διατήρηση ενός άψογου εργασιακού περιβάλλοντος.",
+      features: [
+        "Καθαρισμός γραφείων",
+        "Εμπορικοί χώροι",
+        "Κοινόχρηστοι χώροι",
+        "Απολύμανση τουαλετών",
+      ],
     },
     {
       icon: SparklesIcon,
-      title: t("specialized.title"),
-      description: t("specialized.description"),
-      features: t("specialized.features").split(","),
+      title: "Εξειδικευμένος Καθαρισμός",
+      description:
+        "Εξειδικευμένες υπηρεσίες καθαρισμού για συγκεκριμένες ανάγκες, συμπεριλαμβανομένου του καθαρισμού μετά την κατασκευή και του καθαρισμού εκδηλώσεων.",
+      features: [
+        "Μετά την κατασκευή",
+        "Καθαρισμός εκδηλώσεων",
+        "Απολύμανση",
+        "Πλύσιμο με πίεση",
+      ],
     },
     {
       icon: TruckIcon,
-      title: t("industrial.title"),
-      description: t("industrial.description"),
-      features: t("industrial.features").split(","),
+      title: "Βιομηχανικός Καθαρισμός",
+      description:
+        "Υπηρεσίες βαρέως τύπου καθαρισμού για βιομηχανικές εγκαταστάσεις και αποθήκες με αυστηρά πρότυπα ασφάλειας και ποιότητας.",
+      features: [
+        "Καθαρισμός αποθηκών",
+        "Βιομηχανικά δάπεδα",
+        "Καθαρισμός εξοπλισμού",
+        "Συμμόρφωση ασφαλείας",
+      ],
     },
   ];
 
   return (
-    <section id="services" className="py-20 bg-brand-50">
+    <section id="services" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {t("title")}
+            Οι Υπηρεσίες μας
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {t("subtitle")}
+          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+            Προσφέρουμε ένα ευρύ φάσμα επαγγελματικών υπηρεσιών καθαρισμού για
+            να καλύψουμε όλες τις ανάγκες σας
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-              >
-                <div className="text-brand mb-4 flex items-center justify-center">
-                  <Icon className="h-8 w-8" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="flex items-center mb-4">
+                <service.icon className="h-8 w-8 text-brand mr-3" />
+                <h3 className="text-xl font-semibold text-gray-900">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-4 text-sm text-center">
-                  {service.description}
-                </p>
-                <ul className="space-y-2">
-                  {service.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-center text-gray-600 text-sm"
-                    >
-                      <span className="h-1 w-1 bg-brand rounded-full mr-2"></span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            );
-          })}
+              </div>
+              <p className="text-gray-600 mb-4">{service.description}</p>
+              <ul className="space-y-2">
+                {service.features.map((feature) => (
+                  <li key={feature} className="flex items-center text-gray-600">
+                    <CheckCircleIcon className="h-5 w-5 text-brand mr-2" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

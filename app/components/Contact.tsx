@@ -1,99 +1,52 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 import {
   PhoneIcon,
   EnvelopeIcon,
   MapPinIcon,
 } from "@heroicons/react/24/outline";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useTranslations } from "next-intl";
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
 
 const Contact = () => {
-  const t = useTranslations("contact");
-
-  const schema = yup
-    .object({
-      name: yup.string().required(t("form.name.error")),
-      email: yup
-        .string()
-        .email(t("form.email.invalid"))
-        .required(t("form.email.error")),
-      phone: yup.string().required(t("form.phone.error")),
-      message: yup.string().required(t("form.message.error")),
-    })
-    .required();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ContactFormData>({
-    resolver: yupResolver(schema),
-  });
+  } = useForm();
 
-  const onSubmit = (data: ContactFormData) => {
-    // Here you would typically send the form data to your backend
+  const onSubmit = (data: any) => {
     console.log(data);
-    alert(t("success"));
+    // Handle form submission
   };
 
-  const contactInfo = [
-    {
-      icon: PhoneIcon,
-      title: t("info.phone.title"),
-      content: t("info.phone.content"),
-      link: "tel:+302101234567",
-    },
-    {
-      icon: EnvelopeIcon,
-      title: t("info.email.title"),
-      content: t("info.email.content"),
-      link: "mailto:info@cleanpro.gr",
-    },
-    {
-      icon: MapPinIcon,
-      title: t("info.location.title"),
-      content: t("info.location.content"),
-      link: "https://goo.gl/maps/athens",
-    },
-  ];
-
   return (
-    <section id="contact" className="py-20 bg-brand-50">
+    <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {t("title")}
+            Επικοινωνήστε μαζί μας
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            {t("subtitle")}
+            Έτοιμοι να βιώσετε την καλύτερη υπηρεσία καθαρισμού στην Ελλάδα;
+            Επικοινωνήστε μαζί μας σήμερα!
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-white rounded-lg shadow-md p-6 sm:p-8"
+            className="bg-white rounded-lg shadow-lg p-8"
           >
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div>
@@ -101,13 +54,15 @@ const Contact = () => {
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  {t("form.name.label")}
+                  Όνομα
                 </label>
                 <input
-                  {...register("name")}
+                  {...register("name", {
+                    required: "Το όνομα είναι υποχρεωτικό",
+                  })}
                   type="text"
                   id="name"
-                  placeholder={t("form.name.placeholder")}
+                  placeholder="Το όνομά σας"
                   className={`block w-full rounded-md shadow-sm text-sm ${
                     errors.name
                       ? "border-red-300 focus:border-red-500 focus:ring-red-500"
@@ -116,7 +71,7 @@ const Contact = () => {
                 />
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.name.message}
+                    {errors.name.message as string}
                   </p>
                 )}
               </div>
@@ -126,13 +81,19 @@ const Contact = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  {t("form.email.label")}
+                  Email
                 </label>
                 <input
-                  {...register("email")}
+                  {...register("email", {
+                    required: "Το email είναι υποχρεωτικό",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Μη έγκυρη διεύθυνση email",
+                    },
+                  })}
                   type="email"
                   id="email"
-                  placeholder={t("form.email.placeholder")}
+                  placeholder="Το email σας"
                   className={`block w-full rounded-md shadow-sm text-sm ${
                     errors.email
                       ? "border-red-300 focus:border-red-500 focus:ring-red-500"
@@ -141,7 +102,7 @@ const Contact = () => {
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.email.message}
+                    {errors.email.message as string}
                   </p>
                 )}
               </div>
@@ -151,13 +112,15 @@ const Contact = () => {
                   htmlFor="phone"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  {t("form.phone.label")}
+                  Τηλέφωνο
                 </label>
                 <input
-                  {...register("phone")}
+                  {...register("phone", {
+                    required: "Το τηλέφωνο είναι υποχρεωτικό",
+                  })}
                   type="tel"
                   id="phone"
-                  placeholder={t("form.phone.placeholder")}
+                  placeholder="Το τηλέφωνό σας"
                   className={`block w-full rounded-md shadow-sm text-sm ${
                     errors.phone
                       ? "border-red-300 focus:border-red-500 focus:ring-red-500"
@@ -166,7 +129,7 @@ const Contact = () => {
                 />
                 {errors.phone && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.phone.message}
+                    {errors.phone.message as string}
                   </p>
                 )}
               </div>
@@ -176,13 +139,15 @@ const Contact = () => {
                   htmlFor="message"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  {t("form.message.label")}
+                  Μήνυμα
                 </label>
                 <textarea
-                  {...register("message")}
+                  {...register("message", {
+                    required: "Το μήνυμα είναι υποχρεωτικό",
+                  })}
                   id="message"
                   rows={4}
-                  placeholder={t("form.message.placeholder")}
+                  placeholder="Το μήνυμά σας"
                   className={`block w-full rounded-md shadow-sm text-sm ${
                     errors.message
                       ? "border-red-300 focus:border-red-500 focus:ring-red-500"
@@ -191,47 +156,72 @@ const Contact = () => {
                 ></textarea>
                 {errors.message && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.message.message}
+                    {errors.message.message as string}
                   </p>
                 )}
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-brand text-white px-6 py-3 rounded-md font-medium hover:bg-brand-dark transition-colors shadow-sm hover:shadow-md text-sm"
+                className="w-full bg-brand text-white py-2 px-4 rounded-md hover:bg-brand-600 transition-colors"
               >
-                {t("form.submit")}
+                Αποστολή Μηνύματος
               </button>
             </form>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-white rounded-lg shadow-md p-6 sm:p-8"
+            className="space-y-8"
           >
-            <div className="space-y-8">
-              {contactInfo.map((item) => (
-                <div key={item.title} className="flex items-start">
-                  <div className="flex-shrink-0">
-                    <item.icon className="h-6 w-6 text-brand" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="text-lg font-medium text-gray-900">
-                      {item.title}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                Πληροφορίες Επικοινωνίας
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <PhoneIcon className="h-6 w-6 text-brand mt-1" />
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-900">
+                      Τηλέφωνο
                     </h4>
-                    <a
-                      href={item.link}
-                      className="text-base text-gray-600 hover:text-brand transition-colors"
-                    >
-                      {item.content}
-                    </a>
+                    <p className="text-gray-600">+30 210 1234567</p>
                   </div>
                 </div>
-              ))}
+                <div className="flex items-start space-x-4">
+                  <EnvelopeIcon className="h-6 w-6 text-brand mt-1" />
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-900">Email</h4>
+                    <p className="text-gray-600">info@Clean Xpress.gr</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <MapPinIcon className="h-6 w-6 text-brand mt-1" />
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-900">
+                      Τοποθεσία
+                    </h4>
+                    <p className="text-gray-600">Αθήνα, Ελλάδα</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                Ωράριο Λειτουργίας
+              </h3>
+              <div className="space-y-2">
+                <p className="text-gray-600">
+                  Δευτέρα - Παρασκευή: 8:00 - 20:00
+                </p>
+                <p className="text-gray-600">Σάββατο: 9:00 - 17:00</p>
+                <p className="text-gray-600">Κυριακή: Κλειστά</p>
+              </div>
             </div>
           </motion.div>
         </div>

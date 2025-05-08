@@ -1,24 +1,29 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
+const playfair = Playfair_Display({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CleanPro Greece - Professional Cleaning Services",
+  title: "Επαγγελματικές Υπηρεσίες Καθαρισμού",
   description:
-    "Professional cleaning services in Greece. We provide top-quality residential and commercial cleaning services.",
+    "Παρέχουμε υπηρεσίες καθαρισμού υψηλής ποιότητας για σπίτια, γραφεία και εμπορικούς χώρους",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} antialiased bg-white text-gray-900`}>
-        {children}
+    <html lang="el" suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
+        <Navbar playfairFont={playfair.className} />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

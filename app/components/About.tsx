@@ -2,27 +2,28 @@
 
 import { motion } from "framer-motion";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { useTranslations } from "next-intl";
 
 const About = () => {
-  const t = useTranslations("about");
-
   const features = [
     {
-      title: t("features.experienced.title"),
-      description: t("features.experienced.description"),
+      title: "Έμπειρη Ομάδα",
+      description:
+        "Οι επαγγελματίες καθαριστές μας έχουν χρόνια εμπειρίας τόσο σε οικιακό όσο και σε επαγγελματικό καθαρισμό.",
     },
     {
-      title: t("features.eco.title"),
-      description: t("features.eco.description"),
+      title: "Οικολογικά Προϊόντα",
+      description:
+        "Χρησιμοποιούμε οικολογικά προϊόντα καθαρισμού που είναι ασφαλή για την οικογένεια και τα κατοικίδιά σας.",
     },
     {
-      title: t("features.customized.title"),
-      description: t("features.customized.description"),
+      title: "Εξατομικευμένη Υπηρεσία",
+      description:
+        "Κάθε πρόγραμμα καθαρισμού προσαρμόζεται στις συγκεκριμένες ανάγκες και προτιμήσεις σας.",
     },
     {
-      title: t("features.reliable.title"),
-      description: t("features.reliable.description"),
+      title: "Αξιόπιστοι & Έμπιστοι",
+      description:
+        "Η ομάδα μας είναι πλήρως ελεγμένη, ασφαλισμένη και αφοσιωμένη στη διατήρηση της ιδιωτικότητας και της ασφάλειάς σας.",
     },
   ];
 
@@ -37,14 +38,16 @@ const About = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {t("title")}
+            Γιατί να Επιλέξετε την Clean Xpress;
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            {t("description")}
+            Με πάνω από μια δεκαετία εμπειρίας στις επαγγελματικές υπηρεσίες
+            καθαρισμού, είμαστε υπερήφανοι που προσφέρουμε εξαιρετικά
+            αποτελέσματα που ξεπερνούν τις προσδοκίες.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -52,17 +55,15 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="flex items-start space-x-4 p-6 bg-brand-50/50 rounded-lg hover:bg-brand-50 transition-colors"
+              className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
             >
-              <CheckCircleIcon className="w-5 h-5 text-brand flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <div className="flex items-center mb-4">
+                <CheckCircleIcon className="h-6 w-6 text-brand mr-2" />
+                <h3 className="text-xl font-semibold text-gray-900">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
               </div>
+              <p className="text-gray-600">{feature.description}</p>
             </motion.div>
           ))}
         </div>

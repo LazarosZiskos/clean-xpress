@@ -2,94 +2,64 @@
 
 import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
-import {
-  Bars3Icon,
-  XMarkIcon,
-  GlobeAltIcon,
-} from "@heroicons/react/24/outline";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter, usePathname } from "../i18n/navigation";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const Navbar = () => {
+interface NavbarProps {
+  playfairFont: string;
+}
+
+const Navbar = ({ playfairFont }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const t = useTranslations("navigation");
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
 
   const navItems = [
-    { name: t("home"), to: "hero" },
-    { name: t("about"), to: "about" },
-    { name: t("services"), to: "services" },
-    { name: t("testimonials"), to: "testimonials" },
-    { name: t("contact"), to: "contact" },
+    { name: "Αρχική", to: "hero" },
+    { name: "Σχετικά", to: "about" },
+    { name: "Υπηρεσίες", to: "services" },
+    { name: "Κριτικές", to: "testimonials" },
   ];
-
-  const languages = [
-    { code: "el", label: "Ελληνικά" },
-    { code: "en", label: "English" },
-  ];
-
-  const handleLanguageChange = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
-    setIsLanguageOpen(false);
-  };
 
   return (
-    <nav className="fixed w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            <span className="text-2xl font-bold text-brand font-poppins tracking-tight">
+    <nav className="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <ScrollLink
+              to="hero"
+              spy={true}
+              smooth={true}
+              offset={-64}
+              duration={500}
+              className={`text-2xl font-bold text-brand cursor-pointer ${playfairFont}`}
+            >
               Clean Xpress
-            </span>
+            </ScrollLink>
           </div>
 
           {/* Desktop menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
-              {navItems.map((item) => (
-                <ScrollLink
-                  key={item.name}
-                  to={item.to}
-                  spy={true}
-                  smooth={true}
-                  offset={-64}
-                  duration={500}
-                  className="text-gray-600 hover:text-brand px-3 py-2 text-sm font-medium cursor-pointer transition-colors"
-                >
-                  {item.name}
-                </ScrollLink>
-              ))}
-              <div className="relative">
-                <button
-                  onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-brand px-3 py-2 text-sm font-medium cursor-pointer transition-colors"
-                  aria-label="Language selector"
-                >
-                  <GlobeAltIcon className="h-5 w-5" />
-                  <span>{locale.toUpperCase()}</span>
-                </button>
-                {isLanguageOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none transform opacity-100 scale-100 transition ease-out duration-200">
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => handleLanguageChange(lang.code)}
-                        className={`${
-                          locale === lang.code
-                            ? "bg-brand-50 text-brand"
-                            : "text-gray-700"
-                        } group flex w-full items-center px-4 py-2 text-sm hover:bg-brand-50 transition-colors`}
-                      >
-                        {lang.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+          <div className="hidden md:flex md:items-center md:space-x-8">
+            {navItems.map((item) => (
+              <ScrollLink
+                key={item.name}
+                to={item.to}
+                spy={true}
+                smooth={true}
+                offset={-64}
+                duration={500}
+                className="text-gray-600 hover:text-brand px-3 py-2 text-sm font-medium cursor-pointer transition-colors"
+              >
+                {item.name}
+              </ScrollLink>
+            ))}
+            <ScrollLink
+              to="contact"
+              spy={true}
+              smooth={true}
+              offset={-64}
+              duration={500}
+              className="bg-brand text-white px-6 py-2 rounded-full font-medium hover:bg-brand-dark transition-colors cursor-pointer shadow-md hover:shadow-lg"
+            >
+              Επικοινωνήστε μαζί μας
+            </ScrollLink>
           </div>
 
           {/* Mobile menu button */}
@@ -126,20 +96,17 @@ const Navbar = () => {
                 {item.name}
               </ScrollLink>
             ))}
-            <div className="relative">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
-                  className={`${
-                    locale === lang.code ? "text-brand" : "text-gray-600"
-                  } flex items-center w-full px-3 py-2 text-base font-medium hover:text-brand transition-colors`}
-                >
-                  <GlobeAltIcon className="h-5 w-5 mr-2" />
-                  {lang.label}
-                </button>
-              ))}
-            </div>
+            <ScrollLink
+              to="contact"
+              spy={true}
+              smooth={true}
+              offset={-64}
+              duration={500}
+              className="bg-brand text-white block px-4 py-2 rounded-full font-medium hover:bg-brand-dark transition-colors cursor-pointer shadow-md hover:shadow-lg text-center"
+              onClick={() => setIsOpen(false)}
+            >
+              Επικοινωνήστε μαζί μας
+            </ScrollLink>
           </div>
         </div>
       )}

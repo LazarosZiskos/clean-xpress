@@ -2,31 +2,31 @@
 
 import { motion } from "framer-motion";
 import { StarIcon } from "@heroicons/react/24/solid";
-import { useTranslations } from "next-intl";
 
 const Testimonials = () => {
-  const t = useTranslations("testimonials");
-
   const testimonials = [
     {
-      name: t("clients.maria.name"),
-      role: t("clients.maria.role"),
+      name: "Μαρία Κ.",
+      role: "Ιδιοκτήτρια Κατοικίας",
       image: "/testimonials/maria.jpg",
-      content: t("clients.maria.content"),
+      content:
+        "Εξαιρετική υπηρεσία καθαρισμού! Το σπίτι μου είναι πάντα άψογο μετά από κάθε επίσκεψη. Επαγγελματίες και αξιόπιστοι.",
       rating: 5,
     },
     {
-      name: t("clients.george.name"),
-      role: t("clients.george.role"),
+      name: "Γιώργος Π.",
+      role: "Διευθυντής Εταιρείας",
       image: "/testimonials/george.jpg",
-      content: t("clients.george.content"),
+      content:
+        "Συνεργαζόμαστε εδώ και χρόνια για τον καθαρισμό των γραφείων μας. Πάντα εντυπωσιασμένοι με την ποιότητα και την αξιοπιστία τους.",
       rating: 5,
     },
     {
-      name: t("clients.elena.name"),
-      role: t("clients.elena.role"),
+      name: "Ελένη Μ.",
+      role: "Ιδιοκτήτρια Καταστήματος",
       image: "/testimonials/elena.jpg",
-      content: t("clients.elena.content"),
+      content:
+        "Οι καλύτεροι καθαριστές που έχω συνεργαστεί! Το κατάστημά μου είναι πάντα άψογο και οι πελάτες μου εντυπωσιασμένοι.",
       rating: 5,
     },
   ];
@@ -42,10 +42,11 @@ const Testimonials = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {t("title")}
+            Τι Λένε οι Πελάτες μας
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            {t("subtitle")}
+            Διαβάστε τις εμπειρίες των πελατών μας και δείτε γιατί μας
+            εμπιστεύονται
           </p>
         </motion.div>
 

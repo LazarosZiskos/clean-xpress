@@ -2,12 +2,9 @@
 
 import { Link as ScrollLink } from "react-scroll";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const Hero = () => {
-  const t = useTranslations("hero");
-
   return (
     <section
       id="hero"
@@ -25,11 +22,12 @@ const Hero = () => {
             className="text-left max-w-2xl"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              {t("title")}{" "}
-              <span className="text-brand block mt-2">{t("location")}</span>
+              Επαγγελματικές Υπηρεσίες Καθαρισμού{" "}
+              <span className="text-brand block mt-2">στην Ελλάδα</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8">
-              {t("subtitle")}
+              Παρέχουμε υπηρεσίες καθαρισμού υψηλής ποιότητας για σπίτια,
+              γραφεία και εμπορικούς χώρους
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <ScrollLink
@@ -40,7 +38,7 @@ const Hero = () => {
                 duration={500}
                 className="bg-brand text-white px-8 py-3 rounded-full font-medium hover:bg-brand-dark transition-colors cursor-pointer shadow-md hover:shadow-lg"
               >
-                {t("cta")}
+                Επικοινωνήστε μαζί μας
               </ScrollLink>
               <ScrollLink
                 to="services"
@@ -50,7 +48,7 @@ const Hero = () => {
                 duration={500}
                 className="bg-white text-brand px-8 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors cursor-pointer border border-brand shadow-md hover:shadow-lg"
               >
-                {t("services")}
+                Δείτε τις Υπηρεσίες μας
               </ScrollLink>
             </div>
           </motion.div>
