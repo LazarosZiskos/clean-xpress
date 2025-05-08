@@ -5,7 +5,10 @@ export default createMiddleware({
   locales: ['el', 'en'],
   
   // The default locale to use when visiting a non-localized route
-  defaultLocale: 'el'
+  defaultLocale: 'el',
+  
+  // This is the same as the default locale
+  localePrefix: 'as-needed'
 });
 
 export const config = {
